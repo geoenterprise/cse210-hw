@@ -5,7 +5,7 @@ class Program
     static void Main(string[] args)
     {
         Random randomGenerator = new Random();
-        int myNumber = randomGenerator.Next(1, 11);
+        int myNumber = randomGenerator.Next(1, 100);
         Console.Write("What number am I thinking of? ");
         string answer = Console.ReadLine();
         int guess = int.Parse(answer);

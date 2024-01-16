@@ -1,4 +1,5 @@
 using System;
+using System.Reflection.Metadata.Ecma335;
 
 class Program
 {
@@ -6,22 +7,45 @@ class Program
     {
         Console.Write("What s your grae percentage? ");
         string grade = Console.ReadLine();
-        int x = int.Parse(grade);
-        if (x >= 90)
+        int percentage = int.Parse(grade);
+        string letter = "";
+        string modifier = "";
+        int grade_remainder = percentage % 10;
+        if (percentage >= 90)
         {
-            Console.WriteLine("Your grade is A");
+            letter = "A";
         }
-        else if (x < 90 && x >= 80)
+        else if (percentage < 90 && percentage >= 80)
         {
-            Console.WriteLine("Your grade is B");
-
+            letter = "B";
+        }
+        else if (percentage < 79 && percentage >= 70)
+        {
+            letter = "C";
+        }
+        else if (percentage < 69 && percentage >= 60)
+        {
+            letter = "D";
         }
         else
         {
-            Console.WriteLine("Your grade is F");
+            letter = "F";
         }
-
+        if (grade_remainder >= 7)
+        {
+            modifier = "+";
+        }
+        else if (grade_remainder <= 3)
+        {
+            modifier = "-";
+        }
+        
+        if (percentage >= 97 || percentage <=59)
+        {
+            modifier = "";
+        }
+       
+        Console.WriteLine($"Your grade is {letter}{modifier}");
             
-
     }
 }

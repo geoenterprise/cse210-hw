@@ -15,6 +15,7 @@ class Journal   //This class has my options outputs
         // Displaying the journal entries
         Console.WriteLine("Journal Entries:");
         Console.WriteLine(entries);
+        Console.WriteLine();
     }
     public static void SaveToFile(string entries)
     {

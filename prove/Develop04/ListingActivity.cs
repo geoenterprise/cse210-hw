@@ -36,7 +36,7 @@ class ListingActivity : Activity
         {
             Console.Write("Enter an item for the list (or 'exit' to finish): ");
             string item = Console.ReadLine();
-            Console.WriteLine("");
+            // Console.WriteLine("");
             if (item.ToLower() == "exit")
                 break;
             _count++;

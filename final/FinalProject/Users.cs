@@ -26,10 +26,10 @@ public class User
         try
         {
             // Check if the file exists
-            if (File.Exists("PlantaEstudiantil.csv"))
+            if (File.Exists(filePath))
             {
              
-                string[] lines = File.ReadAllLines("PlantaEstudiantil.csv");
+                string[] lines = File.ReadAllLines(filePath);
 
                 bool skipHeader = true;
                 foreach (string line in lines)
@@ -51,9 +51,9 @@ public class User
                     int finalGrade = int.Parse(fields[7]);
                     int gpa = int.Parse(fields[8]);
                                        
-                    Student student = new Student(lastName, firstName, id, gradeLevel, knowledgeGrade, skillsGrade, personalDevelopmentGrade, finalGrade, gpa);
+                    // Student student = new Student(lastName, firstName, id, gradeLevel, knowledgeGrade, skillsGrade, personalDevelopmentGrade, finalGrade, gpa);
                     
-                    users.Add(new Student(lastName, firstName, id, gradeLevel, knowledgeGrade, skillsGrade, personalDevelopmentGrade, finalGrade, gpa));
+                    users.Add(new User(lastName, firstName, id));
                 }
             }
             else

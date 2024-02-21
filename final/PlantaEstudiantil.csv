@@ -1,7 +1,7 @@
-﻿Last Name,First Name,ID,Assignment Scores,Final Grade,GPA
-Rey,Geo,1127227755,,,
-Criollo,Ana,1014219060,,,
-Albarracin,Sara,1016090638,,,
-Moralez,Laura,1023890756,,,
-Quintana,Pedro,1537762908,,,
-Bernal,Valentina,128654830,,,
+Last Name,"	First Name","	ID","	GradeLevel","	Knowledge","	Skill","	PersonalDevelopment","	Final Grade","	GPA"
+Rey,Geo,"	1127227755","	10",0,0,0,0,0
+Criollo,Ana,"	1014219060","	10",0,0,0,0,0
+Albarracin,"	Sara","	1016090638","	3",0,0,0,0,0
+Moralez, Laura,"	1023890756","	2",0,0,0,0,0
+Quintana,"	Pedro","	1537762908","	4",0,0,0,0,0
+Bernal,"	Valentina","	128654830","	4",0,0,0,0,0

@@ -5,12 +5,14 @@ public class TeacherInterface
     private AssignmentRepository assignmentRepository;
     private AssignmentGrader assignmentGrader;
     private FileManager fileManager;
-
+    
+    private string studentsFilePath = "PlantaEstudiantil2.csv";
     public TeacherInterface()
     {
         assignmentRepository = new AssignmentRepository();
-        assignmentGrader = new AssignmentGrader();
+        assignmentGrader = new AssignmentGrader(this);
         fileManager = new FileManager();
+        
     }
 
     // Method to display the menu and handle user input
@@ -59,6 +61,9 @@ public class TeacherInterface
         Console.Write("Enter assignment description: ");
         string description = Console.ReadLine();
 
+        Console.Write("Enter assignment category: ");
+        string category = Console.ReadLine();
+
         Console.Write("Enter due date (yyyy-MM-dd): ");
         DateTime dueDate;
         if (!DateTime.TryParse(Console.ReadLine(), out dueDate))
@@ -75,18 +80,18 @@ public class TeacherInterface
             return;
         }
 
-        CreateAssignment(title, description, dueDate, maxScore);
+        CreateAssignment(title, description, category, dueDate, maxScore);
     }
-     private Student FindStudentById(int studentID)
+    public Student FindStudentById(int studentID)
     {
         
-        List<Student> students = fileManager.ReadStudentsFromCSV("PlantaEstudiantil.csv");
+        List<Student> students = fileManager.ReadStudentsFromCSV(studentsFilePath);
 
         return students.FirstOrDefault(s => s.ID == studentID);
     }
 
     // Method to find an assignment by title
-    private Assignment FindAssignmentByTitle(string assignmentTitle)
+    public Assignment FindAssignmentByTitle(string assignmentTitle)
     {
         List<Assignment> assignments = assignmentRepository.GetAllAssignments();
 
@@ -130,15 +135,32 @@ public class TeacherInterface
     }
     // Method to display a list of grade-level students
     private void ShowGradeLevelStudentsList()
-    {        
-        List<Student> students = fileManager.ReadStudentsFromCSV("PlantaEstudiantil.csv");
+    {
+        Console.Write("Enter the grade level: ");
+        if (!int.TryParse(Console.ReadLine(), out int gradeLevel))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid grade level.");
+            return;
+        }
+
+        List<Student> students = fileManager.ReadStudentsFromCSV("PlantaEstudiantil2.csv");
 
         if (students != null && students.Any())
         {
-            Console.WriteLine("Grade Level Students List:");
-            foreach (Student student in students)
+            // Filter students by grade level
+            List<Student> filteredStudents = students.Where(s => s.GradeLevel == gradeLevel).ToList();
+
+            if (filteredStudents.Any())
             {
-                student.DisplayInfo();
+                Console.WriteLine($"Grade {gradeLevel} Students List:");
+                foreach (Student student in filteredStudents)
+                {
+                    student.DisplayInfo();
+                }
+            }
+            else
+            {
+                Console.WriteLine($"No students found in grade {gradeLevel}.");
             }
         }
         else
@@ -152,7 +174,7 @@ public class TeacherInterface
         Console.Write("Enter student ID: ");
         int studentID = int.Parse(Console.ReadLine());
         
-        List<Student> students = fileManager.ReadStudentsFromCSV("PlantaEstudiantil.csv");
+        List<Student> students = fileManager.ReadStudentsFromCSV(studentsFilePath);
 
         Student student = students.FirstOrDefault(s => s.ID == studentID);
 
@@ -166,12 +188,13 @@ public class TeacherInterface
             Console.WriteLine("Student not found.");
         }
     }
-    public void CreateAssignment(string title, string description, DateTime dueDate, int maxScore)
+    public void CreateAssignment(string title, string description, string category, DateTime dueDate, int maxScore)
     {
         Assignment assignment = new Assignment
         {
             Title = title,
             Description = description,
+            Category = category,
             DueDate = dueDate,
             MaxScore = maxScore
         };
@@ -180,6 +203,37 @@ public class TeacherInterface
 
     public void GradeAssignment(Student student, Assignment assignment, double score, string feedback)
     {
-        assignmentGrader.GradeAssignment(student, assignment, score, feedback);
+
+        string letterGrade = GetLetterGrade(score);
+
+        // Update the student's final grade and assignment feedback
+        student.FinalGrade = score;
+        assignment.Feedback = feedback;
+
+        // Output the graded assignment information
+        Console.WriteLine($"Assignment '{assignment.Title}' graded for student {student.LastName}, {student.FirstName}. Score: {score}. Feedback: {feedback}. Final Grade: {letterGrade}");
+    }
+    private string GetLetterGrade(double score)
+    {
+        if (score < 3.0)
+        {
+            return "Failing";
+        }
+        else if (score < 3.5)
+        {
+            return "D";
+        }
+        else if (score < 4.0)
+        {
+            return "C";
+        }
+        else if (score < 4.5)
+        {
+            return "B";
+        }
+        else
+        {
+            return "A";
+        }
     }
 }

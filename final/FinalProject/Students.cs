@@ -21,7 +21,8 @@ public class Student : User
     // Method to display student information
     public void DisplayInfo()
     {
-        Console.WriteLine($"Name: {LastName} {FirstName}, ID: {ID}, Grade Level: {GradeLevel}, \nKnowledge Grade: {KnowledgeGrade} \nSkills Grade: {SkillsGrade} \nPersonal Development Grade: {PersonalDevelopmentGrade} \nFinal Grade: {FinalGrade}, GPA: {GPA}");
+        Console.WriteLine("--------------------------------------");
+        Console.WriteLine($"Name: {LastName} {FirstName}, ID: {ID}, Grade Level: {GradeLevel}, \nKnowledge Grade: {KnowledgeGrade} \nSkills Grade: {SkillsGrade} \nPersonal Development Grade: {PersonalDevelopmentGrade} \nFinal Grade: {FinalGrade}, GPA: {GPA}\n");
     }
     public void UpdateGrades(double knowledgeGrade, double skillsGrade, double personalDevelopmentGrade)
     {

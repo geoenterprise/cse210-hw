@@ -13,10 +13,10 @@ public class FileManager
         try
         {
             // Check if the file exists
-            if (File.Exists("PlantaEstudiantil.csv"))
+            if (File.Exists(filePath))
             {
                 // Read all lines from the CSV file
-                string[] lines = File.ReadAllLines("PlantaEstudiantil.csv");
+                string[] lines = File.ReadAllLines(filePath);
                 bool skipHeader = true;
                 foreach (string line in lines)
                 {

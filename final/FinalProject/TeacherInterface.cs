@@ -5,14 +5,20 @@ public class TeacherInterface
     private AssignmentRepository assignmentRepository;
     private AssignmentGrader assignmentGrader;
     private FileManager fileManager;
+    private GradingSystem gradingSystem; 
     
     private string studentsFilePath = "PlantaEstudiantil2.csv";
     public TeacherInterface()
     {
         assignmentRepository = new AssignmentRepository();
-        assignmentGrader = new AssignmentGrader(this);
+        // assignmentGrader = new AssignmentGrader(this);
         fileManager = new FileManager();
-        
+        // this.gradingSystem = gradingSystem;
+    }
+    public GradingSystem GradingSystem => gradingSystem;
+    public void InitializeAssignmentGrader(GradingSystem gradingSystem)
+    {
+        assignmentGrader = new AssignmentGrader(this, gradingSystem);
     }
 
     // Method to display the menu and handle user input

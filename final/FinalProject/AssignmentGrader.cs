@@ -1,9 +1,13 @@
 public class AssignmentGrader
 {
     private TeacherInterface teacherInterface;
-    public AssignmentGrader(TeacherInterface teacherInterface)
+    private GradeInput gradeInput;
+    private GradingSystem gradingSystem;
+    public AssignmentGrader(TeacherInterface teacherInterface, GradingSystem gradingSystem)
     {
         this.teacherInterface = teacherInterface;
+        this.gradeInput = new GradeInput();
+        this.gradingSystem = gradingSystem; 
     }
     public void GradeAssignmentMenu()
     {
@@ -24,6 +28,7 @@ public class AssignmentGrader
 
         if (student != null && assignment != null)
         {
+            gradeInput.InputGrades(student);
             Console.Write("Enter score for the assignment: ");
             double score;
             if (!double.TryParse(Console.ReadLine(), out score))
@@ -36,7 +41,10 @@ public class AssignmentGrader
             string letterGrade = GetLetterGrade(score);
             
             // Update the student's final grade and assignment feedback
-            student.FinalGrade = score;
+            double totalGrade = (student.KnowledgeGrade + student.SkillsGrade + student.PersonalDevelopmentGrade) / 3.0;
+            double gpa = teacherInterface.GradingSystem.CalculateGPA(totalGrade);
+            student.FinalGrade = totalGrade;
+            student.GPA = gpa;
             assignment.Feedback = $"Score: {score}. Final Grade: {letterGrade}";
 
             Console.WriteLine($"Assignment '{assignment.Title}' graded for student {student.LastName}, {student.FirstName}. Score: {score}. Final Grade: {letterGrade}");
